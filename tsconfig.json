@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "target": "es6",
+        "removeComments": true,
+        "outDir": "js",
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

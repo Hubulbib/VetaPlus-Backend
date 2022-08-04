@@ -1,0 +1,24 @@
+import { Router } from 'express'
+import { body } from 'express-validator'
+import clientController from '../controllers/client.controller'
+
+const router = Router()
+
+router.post(
+    '/create',
+    [
+        body('name').exists().notEmpty(),
+        body('phone').matches(/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/)
+    ],
+    clientController.create
+)
+router.get('/get/:id', clientController.get)
+router.patch(
+    '/edit/:id',
+    [
+        body('params').exists().isObject().notEmpty()
+    ],
+    clientController.edit)
+router.delete('/delete/:id', clientController.delete)
+
+export default router

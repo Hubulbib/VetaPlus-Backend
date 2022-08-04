@@ -4,7 +4,10 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import 'dotenv/config'
 import authRouter from './src/auth/routers/auth.router'
+import clientRouter from './src/clients/routers/client.router'
+import visitClientRouter from './src/visits/routers/visit-client.router'
 import errorMiddleware from './src/auth/middlewares/error.middleware'
+import authMiddleware from './src/auth/middlewares/auth.middleware'
 
 const PORT = process.env.port
 const MONGO_URL = process.env.mongo_url
@@ -19,6 +22,9 @@ app.use(cors({
 }))
 
 app.use('/api/auth', authRouter)
+
+app.use('/api/client', authMiddleware, clientRouter)
+app.use('/api/client/:id/visit', visitClientRouter)
 
 app.use(errorMiddleware)
 

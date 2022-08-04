@@ -1,11 +1,7 @@
 export class ApiError extends Error {
-    status: number
-    errors: string[]
 
-    constructor(status: number, message: string, errors = []) {
+    constructor(public status: number, message: string, public errors = []) {
         super(message)
-        this.status = status
-        this.errors = errors
     }
 
     static UnauthorizedError() {

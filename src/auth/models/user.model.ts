@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { userInterface } from '../interfaces/user.interface'
+import { Iuser } from '../interfaces/user.interface'
 
-const schema = new Schema<userInterface>({
+const schema = new Schema<Iuser>({
     username: { type: String, unique: true, required: true },
     password: { type: String, required: true }
 })

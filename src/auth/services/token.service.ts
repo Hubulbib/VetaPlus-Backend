@@ -2,7 +2,7 @@ import { sign, verify } from 'jsonwebtoken'
 import Token from '../models/token.schema'
 
 class TokenService {
-    generateTokens(payload) {
+    generateTokens(payload: object) {
         const accessToken = sign(payload, process.env.secret_access_jwt, { expiresIn: '15m' })
         const refreshToken = sign(payload, process.env.secret_refresh_jwt, { expiresIn: '30d' })
         return {

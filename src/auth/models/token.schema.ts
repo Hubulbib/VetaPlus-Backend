@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { tokenInterface } from '../interfaces/token.interface'
+import { Itoken } from '../interfaces/token.interface'
 
-const schema = new Schema<tokenInterface>({
+const schema = new Schema<Itoken>({
     refreshToken: { type: String, required: true }
 })
 

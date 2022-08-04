@@ -1,3 +1,3 @@
-export interface tokenInterface {
+export interface Itoken {
     refreshToken: string
 }

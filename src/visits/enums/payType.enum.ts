@@ -1,4 +1,4 @@
 export enum EpayType {
-    cash = 'cash',
-    cashless = 'cashless'
+    cash = 'НАЛ',
+    cashless = 'БЕЗНАЛ'
 }

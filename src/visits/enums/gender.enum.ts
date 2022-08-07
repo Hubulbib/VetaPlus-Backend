@@ -1,4 +1,4 @@
 export enum Egender {
-    male = 'male',
-    female = 'female'
+    male = 'МУЖ',
+    female = 'ЖЕН'
 }

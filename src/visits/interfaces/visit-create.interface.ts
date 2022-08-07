@@ -1,8 +1,5 @@
-import { Types } from 'mongoose'
-
-export interface Ivisit {
-    _id?: Types.ObjectId | string
-    date: number
+export interface IvisitCreate {
+    clientId: string
     pet: string
     nickname: string
     age: number

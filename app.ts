@@ -23,8 +23,7 @@ app.use(cors({
 
 app.use('/api/auth', authRouter)
 
-app.use('/api/client', authMiddleware, clientRouter)
-app.use('/api/client/:id/visit', visitClientRouter)
+app.use('/api/client', authMiddleware, [clientRouter, visitClientRouter])
 
 app.use(errorMiddleware)
 

@@ -31,7 +31,7 @@ class VisitClientService {
 
         const visitDto = new VisitEditDto(visitData)
 
-        const visit = await Client.updateOne({ 'visits._id': visitData.visitId }, { $set: { 'visits.$': visitDto } })
+        const visit = await Client.updateOne({ _id: visitData.clientId, 'visits._id': visitData.visitId }, { $set: { 'visits.$': visitDto } })
         return visit
     }
 

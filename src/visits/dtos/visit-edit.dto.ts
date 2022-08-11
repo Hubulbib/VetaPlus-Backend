@@ -1,13 +1,13 @@
 export class VisitEditDto {
-    readonly date?: number
-    pet?: string
-    nickname?: string
-    age?: number
-    gender?: string
-    disease?: string
-    treatment?: string
-    payType?: string
-    paySum?: number
+    date: number = Date.now()
+    pet: string = ''
+    nickname: string = ''
+    age: number
+    gender: string = ''
+    disease: string = ''
+    treatment: string = ''
+    payType: string = 'НАЛ'
+    paySum: number
 
     constructor(data) {
         this.date = data.date

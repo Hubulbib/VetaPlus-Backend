@@ -1,5 +1,5 @@
 export class VisitCreateDto {
-    date: number
+    date: Date
     pet: string
     nickname: string
     age: number

@@ -2,7 +2,7 @@ import { Types } from 'mongoose'
 
 export interface Ivisit {
     _id?: Types.ObjectId | string
-    date: number
+    date: Date
     pet: string
     nickname: string
     age: number

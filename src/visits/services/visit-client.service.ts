@@ -2,13 +2,13 @@ import { IvisitCreate } from '../interfaces/visit-create.interface'
 import { IvisitEdit } from '../interfaces/visit-edit.interface'
 import { VisitCreateDto } from '../dtos/visit-create.dto'
 import { VisitEditDto } from '../dtos/visit-edit.dto'
-import Client from '../../clients/models/client.schema'
+import Client from '../../clients/schemas/client.schema'
 
 class VisitClientService {
     async create(visitData: IvisitCreate) {
         const client = await this.checkClient(visitData.clientId)
 
-        const date = this.getNowDay()
+        const date = (new Date(Date.now())).toISOString()
 
         const visitDto = new VisitCreateDto({ date, ...visitData })
 
@@ -27,11 +27,11 @@ class VisitClientService {
     async edit(visitData: IvisitEdit) {
         await this.checkClient(visitData.clientId)
 
-        await this.isExists(visitData.clientId, visitData.visitId)
+        const editVisit = await this.isExists(visitData.clientId, visitData.visitId)
 
         const visitDto = new VisitEditDto(visitData)
 
-        const visit = await Client.updateOne({ _id: visitData.clientId, 'visits._id': visitData.visitId }, { $set: { 'visits.$': visitDto } })
+        const visit = await Client.updateOne({ _id: visitData.clientId, 'visits._id': visitData.visitId }, { $set: { 'visits.$': { ...visitDto, date: editVisit.date } } })
         return visit
     }
 
@@ -46,18 +46,13 @@ class VisitClientService {
     }
 
     private async isExists(clientId: string, visitId: string) {
-        const isExists = await Client.findOne({ _id: clientId, visits: { $elemMatch: { _id: visitId } } })
+        const isExists = await Client.findOne({ _id: clientId, visits: { $elemMatch: { _id: visitId } } }, { 'visits.$': 1, _id: 0 })
 
         if (!isExists) {
             throw new Error('Такой записи не существует')
         }
-    }
 
-    private getNowDay() {
-        const nowDay = new Date(Date.now())
-        const date = (new Date(`${nowDay.getMonth()}-${nowDay.getDate()}-${nowDay.getFullYear()}`)).getTime()
-
-        return date
+        return isExists.visits[0]
     }
 
     private async checkClient(id: string) {

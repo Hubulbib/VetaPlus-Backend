@@ -1,5 +1,4 @@
-import { hash } from 'bcrypt'
-import Client from '../models/client.schema'
+import Client from '../schemas/client.schema'
 
 class ClientServie {
 

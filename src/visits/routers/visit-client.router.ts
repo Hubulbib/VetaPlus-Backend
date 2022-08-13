@@ -8,14 +8,9 @@ const router = Router()
 router.post(
     '/:id/visit/create',
     [
-        body('pet').exists().notEmpty(),
-        body('nickname').exists().notEmpty(),
-        body('age').exists().notEmpty().isInt(),
-        body('gender').exists().notEmpty(),
-        body('disease').exists().notEmpty(),
-        body('treatment').exists().notEmpty(),
-        body('payType').exists().notEmpty(),
+        body(['pet', 'nickname', 'gender', 'disease', 'treatment', 'payType']).exists().notEmpty(),
         body('paySum').exists().notEmpty().isCurrency(),
+        body('age').exists().notEmpty().isInt(),
     ],
     visitClientController.create
 )
@@ -25,14 +20,7 @@ router.get('/:id/visit/get-all', visitClientController.getAll)
 router.patch(
     '/:id/visit/edit/:visitId',
     [
-        body('pet').exists(),
-        body('nickname').exists(),
-        body('age').exists(),
-        body('gender').exists(),
-        body('disease').exists(),
-        body('treatment').exists(),
-        body('payType').exists(),
-        body('paySum').exists(),
+        body(['pet', 'nickname', 'age', 'gender', 'disease', 'treatment', 'payType', 'paySum']).exists()
     ],
     visitClientController.edit)
 

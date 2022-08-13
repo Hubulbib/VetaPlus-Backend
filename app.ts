@@ -7,6 +7,7 @@ import authRouter from './src/auth/routers/auth.router'
 import clientRouter from './src/clients/routers/client.router'
 import visitRouter from './src/visits/routers/visit.router'
 import visitClientRouter from './src/visits/routers/visit-client.router'
+import userRouter from './src/user/routers/user.router'
 import errorMiddleware from './src/auth/middlewares/error.middleware'
 import authMiddleware from './src/auth/middlewares/auth.middleware'
 
@@ -24,8 +25,9 @@ app.use(cors({
 
 app.use('/api/auth', authRouter)
 
-app.use('/api/client', [clientRouter, visitClientRouter])
-app.use('/api/visit', visitRouter)
+app.use('/api/client', authMiddleware, [clientRouter, visitClientRouter])
+app.use('/api/visit', authMiddleware, visitRouter)
+app.use('/api/user', authMiddleware, userRouter)
 
 app.use(errorMiddleware)
 

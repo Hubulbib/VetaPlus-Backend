@@ -3,6 +3,8 @@ import { IvisitEdit } from '../interfaces/visit-edit.interface'
 import { VisitCreateDto } from '../dtos/visit-create.dto'
 import { VisitEditDto } from '../dtos/visit-edit.dto'
 import Client from '../../clients/schemas/client.schema'
+import { VisitError } from '../exceptions/visit.error'
+import { ClientError } from '../../clients/exceptions/client.error'
 
 class VisitClientService {
     async create(visitData: IvisitCreate) {
@@ -49,7 +51,7 @@ class VisitClientService {
         const isExists = await Client.findOne({ _id: clientId, visits: { $elemMatch: { _id: visitId } } }, { 'visits.$': 1, _id: 0 })
 
         if (!isExists) {
-            throw new Error('Такой записи не существует')
+            throw VisitError.NotFound('Данной записи не существует')
         }
 
         return isExists.visits[0]
@@ -59,7 +61,7 @@ class VisitClientService {
         const client = await Client.findById(id)
 
         if (!client) {
-            throw new Error('Такого клиента не существует')
+            throw ClientError.NotFound('Данного клиента не было на приеме')
         }
         return client
     }

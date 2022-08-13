@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 import { ClientDto } from '../dtos/response-client.dto'
+import { ClientError } from '../exceptions/client.error'
 import clientService from '../services/client.service'
 
 class ClientContoller {
@@ -8,7 +9,7 @@ class ClientContoller {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                throw new Error // сделать обработку ошибок
+                return next(ClientError.BadRequest('Ошибка при валидации', errors.array()))
             }
             const { name, phone } = req.body
             const clientData = await clientService.create(name, phone)
@@ -50,7 +51,7 @@ class ClientContoller {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                throw new Error // сделать обработку ошибок
+                return next(ClientError.BadRequest('Ошибка при валидации', errors.array()))
             }
             const id = req.params['id']
             const { params } = req.body

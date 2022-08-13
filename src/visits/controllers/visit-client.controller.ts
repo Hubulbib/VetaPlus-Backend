@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
+import { VisitError } from '../exceptions/visit.error'
 import visitClientService from '../services/visit-client.service'
 
 
@@ -8,7 +9,7 @@ class VisitClientController {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                throw new Error // сделать обработку ошибок
+                return next(VisitError.BadRequest('Ошибка в заполненных данных', errors.array()))
             }
             const clientId = req.params['id']
             const visitReq = req.body
@@ -39,7 +40,7 @@ class VisitClientController {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                throw new Error // сделать обработку ошибок
+                return next(VisitError.BadRequest('Ошибка в заполненных данных', errors.array()))
             }
 
             const clientId = req.params['id']

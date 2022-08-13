@@ -1,3 +1,4 @@
+import { ClientError } from '../exceptions/client.error'
 import Client from '../schemas/client.schema'
 
 class ClientServie {
@@ -5,7 +6,7 @@ class ClientServie {
     async create(name: string, phone: string) {
         const candidate = await Client.findOne({ phone })
         if (candidate) {
-            throw new Error('Такой клиент уже был на приеме')
+            throw ClientError.NotAcceptable('Данный клиент уже был на приеме')
         }
         const client = await Client.create({ name, phone })
 
@@ -37,7 +38,7 @@ class ClientServie {
     private async checkClient(id: string) {
         const client = await Client.findById(id)
         if (!client) {
-            throw new Error('Такого клиента не существует')
+            throw ClientError.NotFound('Такого клиента не существует')
         }
         return client
     }

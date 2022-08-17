@@ -39,6 +39,7 @@ export const receptionDay = (day: Date) => {
                 '_id': '$visits._id',
                 'time': '$time',
                 'name': '$name',
+                'phone': '$phone',
                 'pet': '$visits.pet',
                 'disease': '$visits.disease',
                 'payType': '$visits.payType',

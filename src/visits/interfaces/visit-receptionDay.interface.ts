@@ -4,6 +4,7 @@ export interface IreceptionDay {
     _id: Types.ObjectId
     time: string
     name: string
+    phone: string
     pet: string
     disease: string
     payType: string

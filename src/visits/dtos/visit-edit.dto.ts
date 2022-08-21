@@ -1,5 +1,5 @@
 export class VisitEditDto {
-    date: number = Date.now()
+    date: Date
     pet: string = ''
     nickname: string = ''
     age: number
@@ -10,7 +10,7 @@ export class VisitEditDto {
     paySum: number
 
     constructor(data) {
-        this.date = data.date
+        this.date = data.date.toISOString()
         this.nickname = data.nickname
         this.age = data.age
         this.disease = data.disease

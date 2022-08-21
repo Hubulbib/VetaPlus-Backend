@@ -1,14 +1,14 @@
 export const receptionDay = (day: Date) => {
 
     const segmentDate = (type: string) => {
-        if (type === 'gt') {
-            let dateFrom = (new Date(day.getTime() - 24 * 60 * 60 * 1000))
-            dateFrom = new Date(`${dateFrom.getMonth() + 1} ${dateFrom.getDate()}, ${dateFrom.getFullYear()} 02:59:59`)
+        if (type === 'gte') {
+            let dateFrom = (new Date(day.getTime()))
+            dateFrom = new Date(`${dateFrom.getMonth() + 1} ${dateFrom.getDate()}, ${dateFrom.getFullYear()} 03:00:00`)
             return dateFrom
-        } else if (type === 'lt') {
-            let dateFrom = (new Date(day.getTime() + 24 * 60 * 60 * 1000))
-            dateFrom = new Date(`${dateFrom.getMonth() + 1} ${dateFrom.getDate()}, ${dateFrom.getFullYear()} 02:59:59`)
-            return dateFrom
+        } else if (type === 'lte') {
+            let dateUntil = (new Date(day.getTime() + 24 * 60 * 60 * 1000))
+            dateUntil = new Date(`${dateUntil.getMonth() + 1} ${dateUntil.getDate()}, ${dateUntil.getFullYear()} 02:59:59`)
+            return dateUntil
         }
     }
 
@@ -21,8 +21,8 @@ export const receptionDay = (day: Date) => {
         }, {
             '$match': {
                 'visits.date': {
-                    '$gt': segmentDate('gt'),
-                    '$lt': segmentDate('lt')
+                    '$gte': new Date((segmentDate('gte')).toISOString()),
+                    '$lte': new Date((segmentDate('lte')).toISOString())
                 }
             }
         }, {
@@ -36,6 +36,7 @@ export const receptionDay = (day: Date) => {
             }
         }, {
             '$project': {
+                'client_id': '$_id',
                 '_id': '$visits._id',
                 'time': '$time',
                 'name': '$name',

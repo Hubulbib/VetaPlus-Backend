@@ -13,6 +13,7 @@ router.post(
     clientController.create
 )
 router.get('/get/:id', clientController.get)
+router.get('/get-all', clientController.getAll)
 router.patch(
     '/edit/:id',
     [

@@ -34,6 +34,16 @@ class ClientContoller {
         }
     }
 
+    async getAll(req: Request, res: Response, next: NextFunction) {
+        try {
+            const clientsData = await clientService.getAll()
+
+            return res.json(clientsData)
+        } catch (err) {
+            next(err)
+        }
+    }
+
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params['id']

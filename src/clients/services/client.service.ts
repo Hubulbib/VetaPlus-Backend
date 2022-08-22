@@ -1,5 +1,6 @@
 import { ClientError } from '../exceptions/client.error'
 import Client from '../schemas/client.schema'
+import {getAll} from '../queries/getAll'
 
 class ClientServie {
 
@@ -8,22 +9,26 @@ class ClientServie {
         if (candidate) {
             throw ClientError.NotAcceptable('Данный клиент уже был на приеме')
         }
-        const client = await Client.create({ name, phone })
-
-        return client
+        await Client.create({ name, phone })
     }
 
     async get(id: string) {
-        const client = await this.checkClient(id)
+        return await this.checkClient(id)
+    }
 
-        return client
+    async getAll() {
+        const clients = await Client.aggregate(getAll())
+
+        return clients.map(el => {
+            el.client[3] = el.client[3].length
+            return [...el.client]
+        })
     }
 
     async delete(id: string) {
         const client = await this.checkClient(id)
-        const clientData = await client.delete()
 
-        return clientData
+        await client.delete()
     }
 
     async edit(id: string, params: { name: string, phone: string }) {

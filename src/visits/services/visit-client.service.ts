@@ -10,7 +10,7 @@ class VisitClientService {
     async create(visitData: IvisitCreate) {
         const client = await this.checkClient(visitData.clientId)
 
-        const date = (new Date(Date.now())).toISOString()
+        const date = (new Date).toISOString()
 
         const visitDto = new VisitCreateDto({ date, ...visitData })
 
@@ -33,8 +33,10 @@ class VisitClientService {
 
         const visitDto = new VisitEditDto(visitData)
 
-        const visit = await Client.updateOne({ _id: visitData.clientId, 'visits._id': visitData.visitId }, { $set: { 'visits.$': { ...visitDto, date: editVisit.date } } })
-        return visit
+        return Client.updateOne({
+            _id: visitData.clientId,
+            'visits._id': visitData.visitId
+        }, {$set: {'visits.$': {...visitDto, date: editVisit.date}}})
     }
 
     async delete(clientId: string, visitId: string) {
@@ -42,9 +44,7 @@ class VisitClientService {
 
         await this.isExists(clientId, visitId)
 
-        const visit = await Client.updateOne({ _id: clientId }, { $pull: { 'visits': { _id: visitId } } })
-
-        return visit
+        return Client.updateOne({_id: clientId}, {$pull: {'visits': {_id: visitId}}})
     }
 
     private async isExists(clientId: string, visitId: string) {

@@ -1,4 +1,17 @@
 export const finReport = (from: Date, until: Date) => {
+
+    const segmentDate = (type: string) => {
+        if (type === 'from') {
+            let dateFrom = (new Date(from.getTime()))
+            dateFrom = new Date(`${dateFrom.getMonth() + 1} ${dateFrom.getDate()}, ${dateFrom.getFullYear()} 03:00:00`)
+            return dateFrom
+        } else if (type === 'until'){
+            let dateUntil = (new Date(until.getTime() + 24 * 60 * 60 * 1000))
+            dateUntil = new Date(`${dateUntil.getMonth() + 1} ${dateUntil.getDate()}, ${dateUntil.getFullYear()} 02:59:59`)
+            return dateUntil
+        }
+    }
+
     return [
         {
             '$project': {
@@ -10,11 +23,11 @@ export const finReport = (from: Date, until: Date) => {
                             '$and': [
                                 {
                                     '$gte': [
-                                        '$$dt.date', from
+                                        '$$dt.date', new Date(segmentDate('from').toISOString())
                                     ]
                                 }, {
                                     '$lte': [
-                                        '$$dt.date', until
+                                        '$$dt.date', new Date(segmentDate('until').toISOString())
                                     ]
                                 }
                             ]
@@ -29,7 +42,7 @@ export const finReport = (from: Date, until: Date) => {
         }, {
             '$group': {
                 '_id': {
-                    'day': {
+                    'date': {
                         '$dateToString': {
                             'format': '%Y-%m-%d',
                             'date': '$visits.date'

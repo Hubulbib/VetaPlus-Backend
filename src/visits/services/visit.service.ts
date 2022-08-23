@@ -9,8 +9,8 @@ class VisitService {
         const finData: IfinReport[] = await Client.aggregate(finReport(dayFrom, dayUntil))
 
         return finData.sort((a, b) => {
-            const aDate = new Date(a._id.day)
-            const bDate = new Date(b._id.day)
+            const aDate = new Date(a._id.date)
+            const bDate = new Date(b._id.date)
             if (aDate < bDate) return -1
             else if (aDate > bDate) return 1
             return 0

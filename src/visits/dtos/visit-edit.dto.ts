@@ -10,7 +10,7 @@ export class VisitEditDto {
     paySum: number
 
     constructor(data) {
-        this.date = data.date.toISOString()
+        this.date = data.date
         this.nickname = data.nickname
         this.age = data.age
         this.disease = data.disease

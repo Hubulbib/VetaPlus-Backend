@@ -9,11 +9,20 @@ class ClientServie {
         if (candidate) {
             throw ClientError.NotAcceptable('Данный клиент уже был на приеме')
         }
-        await Client.create({ name, phone })
+        return await Client.create({ name, phone })
     }
 
     async get(id: string) {
-        return await this.checkClient(id)
+        const client = await this.checkClient(id)
+        client.visits.sort((a, b) => {
+            const aDate = new Date(a.date)
+            const bDate = new Date(b.date)
+            if (aDate < bDate) return 1
+            else if (aDate > bDate) return -1
+            return 0
+        })
+
+        return client
     }
 
     async getAll() {

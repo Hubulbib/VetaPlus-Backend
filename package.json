@@ -1,5 +1,5 @@
 {
-  "name": "kurbanapp",
+  "name": "vetaplus",
   "version": "1.0.0",
   "description": "platfrom for veterinary clinic",
   "main": "app.ts",
@@ -13,7 +13,7 @@
     "react",
     "typescript"
   ],
-  "author": "Kamal Kurbanov <developer>",
+  "author": "CONCEPT WS",
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -34,7 +34,6 @@
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.4.4",
-    "uuid": "^8.3.2"
+    "mongoose": "^6.4.4"
   }
 }

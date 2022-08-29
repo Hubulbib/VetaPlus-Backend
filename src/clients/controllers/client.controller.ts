@@ -9,7 +9,7 @@ class ClientContoller {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                return next(ClientError.BadRequest('Ошибка при валидации', errors.array()))
+                return next(ClientError.BadRequest('Ошибка при заполнении данных', errors.array()))
             }
             const { name, phone } = req.body
             const clientData = await clientService.create(name, phone)

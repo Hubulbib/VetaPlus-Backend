@@ -33,10 +33,18 @@ class VisitClientService {
 
         const visitDto = new VisitEditDto(visitData)
 
-        return Client.updateOne({
-            _id: visitData.clientId,
-            'visits._id': visitData.visitId
-        }, {$set: {'visits.$': {...visitDto, date: editVisit.date}}})
+        await Client.findOneAndUpdate({_id: visitData.clientId}, {$pull: {'visits': {_id: visitData.visitId}}})
+
+        const client = await Client.findOneAndUpdate({_id: visitData.clientId}, {
+            $push: {
+                'visits': {
+                    ...visitDto,
+                    date: editVisit.date
+                }
+            }
+        }, {new: true})
+
+        return client.visits[client.visits.length - 1]._id
     }
 
     async delete(clientId: string, visitId: string) {

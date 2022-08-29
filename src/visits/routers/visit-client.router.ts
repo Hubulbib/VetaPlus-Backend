@@ -4,7 +4,7 @@ import visitClientController from '../controllers/visit-client.controller'
 
 const router = Router()
 
-// /api/client/:id/visit
+// /api/client
 router.post(
     '/:id/visit/create',
     [

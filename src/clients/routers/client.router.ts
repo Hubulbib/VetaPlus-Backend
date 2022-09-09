@@ -8,7 +8,7 @@ router.post(
     '/create',
     [
         body('name').exists().notEmpty(),
-        body('phone').isMobilePhone('ru-RU')
+        body('phone').optional({checkFalsy: true, nullable: true}).isMobilePhone('ru-RU')
     ],
     clientController.create
 )

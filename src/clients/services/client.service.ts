@@ -5,7 +5,7 @@ import {getAll} from '../queries/getAll'
 class ClientServie {
 
     async create(name: string, phone: string) {
-        const candidate = await Client.findOne({ phone })
+        const candidate = await Client.findOne({ name })
         if (candidate) {
             throw ClientError.NotAcceptable('Данный клиент уже был на приеме')
         }
@@ -27,7 +27,6 @@ class ClientServie {
 
     async getAll() {
         const clients = await Client.aggregate(getAll())
-
         return clients.map(el => {
             el.client[3] = el.client[3].length
             return [...el.client]

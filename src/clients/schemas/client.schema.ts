@@ -4,7 +4,7 @@ import { Iclient } from '../interfaces/client.interface'
 
 const schema = new Schema<Iclient>({
     name: { type: String, required: true },
-    phone: { type: String, required: true, unique: true },
+    phone: { type: String },
     visits: [Visit]
 })
 

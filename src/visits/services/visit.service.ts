@@ -5,8 +5,8 @@ import { finReport } from '../queries/finReport'
 import { receptionDay } from '../queries/receptionDay'
 
 class VisitService {
-    async getFinReport(dayFrom: Date, dayUntil: Date) {
-        const finData: IfinReport[] = await Client.aggregate(finReport(dayFrom, dayUntil))
+    async getFinReport(dayFrom: Date, dayUntil: Date, operation: string) {
+        const finData: IfinReport[] = await Client.aggregate(finReport(dayFrom, dayUntil, operation))
 
         return finData.sort((a, b) => {
             const aDate = new Date(a._id.date)

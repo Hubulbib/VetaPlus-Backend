@@ -12,8 +12,9 @@ class VisitController {
             }
             const dayFrom = new Date(req.query.from.toString())
             const dayUntil = new Date(req.query.until.toString())
+            const operation = req.query.operation.toString()
 
-            const visitData = await visitService.getFinReport(dayFrom, dayUntil)
+            const visitData = await visitService.getFinReport(dayFrom, dayUntil, operation)
 
             res.json(visitData)
 

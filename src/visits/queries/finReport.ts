@@ -1,4 +1,4 @@
-export const finReport = (from: Date, until: Date) => {
+export const finReport = (from: Date, until: Date, operation) => {
 
     const segmentDate = (type: string) => {
         if (type === 'from') {
@@ -10,6 +10,52 @@ export const finReport = (from: Date, until: Date) => {
             dateUntil = new Date(`${dateUntil.getMonth() + 1} ${dateUntil.getDate()}, ${dateUntil.getFullYear()} 02:59:59`)
             return dateUntil
         }
+    }
+
+    if (operation === 'clients') {
+        return [
+            {
+                '$project': {
+                    'visits': {
+                        '$filter': {
+                            'input': '$visits',
+                            'as': 'dt',
+                            'cond': {
+                                '$and': [
+                                    {
+                                        '$gte': [
+                                            '$$dt.date', new Date(segmentDate('from').toISOString())
+                                        ]
+                                    }, {
+                                        '$lte': [
+                                            '$$dt.date', new Date(segmentDate('until').toISOString())
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }, {
+            '$unwind': {
+                'path': '$visits'
+            }
+        }, {
+            '$group': {
+                '_id': {
+                    'date': {
+                        '$dateToString': {
+                            'format': '%Y-%m-%d',
+                            'date': '$visits.date'
+                        }
+                    }
+                },
+                'clients': {
+                    '$count': {}
+                }
+            }
+        }
+        ]
     }
 
     return [
@@ -29,6 +75,8 @@ export const finReport = (from: Date, until: Date) => {
                                     '$lte': [
                                         '$$dt.date', new Date(segmentDate('until').toISOString())
                                     ]
+                                }, {
+                                    $eq: ['$$dt.payType', operation === 'cash' ? 'НАЛ' : 'БЕЗНАЛ']
                                 }
                             ]
                         }
@@ -52,9 +100,6 @@ export const finReport = (from: Date, until: Date) => {
                 'paySum': {
                     '$sum': '$visits.paySum'
                 },
-                'clients': {
-                    '$count': {}
-                }
             }
         }
     ]

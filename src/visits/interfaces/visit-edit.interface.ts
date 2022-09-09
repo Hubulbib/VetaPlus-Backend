@@ -3,7 +3,7 @@ export interface IvisitEdit {
     visitId: string
     pet?: string
     nickname?: string
-    age?: number
+    age?: string
     gender?: string
     disease?: string
     treatment?: string

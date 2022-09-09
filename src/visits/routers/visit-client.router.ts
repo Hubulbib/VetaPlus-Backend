@@ -10,7 +10,7 @@ router.post(
     [
         body(['pet', 'nickname', 'gender', 'disease', 'treatment', 'payType']).exists().notEmpty(),
         body('paySum').exists().notEmpty().isCurrency(),
-        body('age').exists().notEmpty().isInt(),
+        body('age').exists().notEmpty(),
     ],
     visitClientController.create
 )

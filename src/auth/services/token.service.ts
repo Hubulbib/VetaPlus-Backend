@@ -1,5 +1,5 @@
 import { sign, verify } from 'jsonwebtoken'
-import Token from '../models/token.schema'
+import Token from '../schemas/token.schema'
 
 class TokenService {
     generateTokens(payload: object) {
@@ -13,8 +13,7 @@ class TokenService {
 
     validateAccessToken(token: string) {
         try {
-            const userData = verify(token, process.env.secret_access_jwt)
-            return userData
+            return verify(token, process.env.secret_access_jwt)
         } catch (err) {
             return null
         }
@@ -22,8 +21,7 @@ class TokenService {
 
     validateRefreshToken(token: string) {
         try {
-            const userData = verify(token, process.env.secret_refresh_jwt)
-            return userData
+            return verify(token, process.env.secret_refresh_jwt)
         } catch (err) {
             return null
         }
@@ -35,18 +33,15 @@ class TokenService {
             tokenData.refreshToken = refreshToken
             return tokenData.save()
         }
-        const token = await Token.create({ refreshToken })
-        return token
+        return (await Token.create({ refreshToken }))
     }
 
     async removeToken(refreshToken: string) {
-        const tokenData = await Token.deleteOne({ refreshToken })
-        return tokenData
+        return (await Token.deleteOne({ refreshToken }))
     }
 
     async findToken(refreshToken: string) {
-        const tokenData = await Token.findOne({ refreshToken })
-        return tokenData
+        return (await Token.findOne({ refreshToken }))
     }
 }
 

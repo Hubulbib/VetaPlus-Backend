@@ -9,6 +9,7 @@ import visitRouter from './src/visits/routers/visit.router'
 import visitClientRouter from './src/visits/routers/visit-client.router'
 import errorMiddleware from './src/auth/middlewares/error.middleware'
 import authMiddleware from './src/auth/middlewares/auth.middleware'
+import userRouter from './src/user/routers/user.router'
 
 const PORT = process.env.port
 const MONGO_URL = process.env.mongo_url
@@ -26,6 +27,7 @@ app.use('/api/auth', authRouter)
 
 app.use('/api/client', authMiddleware, [clientRouter, visitClientRouter])
 app.use('/api/visit', authMiddleware, visitRouter)
+app.use('/api/user', authMiddleware, userRouter)
 
 app.use(errorMiddleware)
 

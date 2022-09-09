@@ -1,11 +1,12 @@
 {
-  "name": "vetaplus",
+  "name": "veta-plus",
   "version": "1.0.0",
-  "description": "platfrom for veterinary clinic",
-  "main": "app.ts",
+  "description": "platform for veterinary clinic",
+  "main": "build/app.js",
   "scripts": {
-    "start": "node app.ts",
-    "server": "nodemon app.ts"
+    "start": "npm run build && node ./build/app.js",
+    "server": "nodemon app.ts",
+    "build": "rimraf ./build && tsc"
   },
   "keywords": [
     "jwt",
@@ -24,6 +25,7 @@
     "install": "^0.13.0",
     "nodemon": "^2.0.19",
     "npm": "^8.14.0",
+    "rimraf": "^3.0.2",
     "typescript": "4.5.5"
   },
   "dependencies": {

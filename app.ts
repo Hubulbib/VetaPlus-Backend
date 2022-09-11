@@ -31,5 +31,7 @@ app.use('/api/user', authMiddleware, userRouter)
 
 app.use(errorMiddleware)
 
+console.log('123')
+
 connect(MONGO_URL)
     .then(() => app.listen(PORT, () => console.log(`App has been started on ${PORT}`)))

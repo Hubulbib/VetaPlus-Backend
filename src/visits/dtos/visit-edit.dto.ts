@@ -3,7 +3,7 @@ export class VisitEditDto {
     pet: string = ''
     nickname: string = ''
     age: string
-    gender: string = ''
+    gender: string = 'КОБЕЛЬ'
     disease: string = ''
     treatment: string = ''
     payType: string = 'НАЛ'
